@@ -1,8 +1,23 @@
 # 수행 과정
 ## python 설치
-```
+```bash
 sudo apt install python
 ```
+
+## Python 환경 변수 등록
+```bash
+which python3
+nano ~/.profile
+```
+
+```
+export PATH=/usr/bin/python3:$PATH
+```
+
+```bash
+source ~/.profile
+```
+
 
 ## python 환경 변수 등록
 - Windows에서만 필요
