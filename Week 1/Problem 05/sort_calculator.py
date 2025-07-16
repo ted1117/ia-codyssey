@@ -19,7 +19,7 @@ def sort_numbers(numbers: list[float]) -> list[float]:
     3. arr[i:]로 범위를 줄여 단계 2번 반복
     """
     arr: list[float] = numbers.copy()
-    n = len(arr)
+    n: int = len(arr)
 
     for i in range(n):
         min_idx = i
