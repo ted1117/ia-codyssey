@@ -4,9 +4,13 @@ def main():
             numbers_input: list[float] = list(
                 map(float, input("하나 이상의 숫자를 입력하세요: ").split())
             )
-            break
+
+            if len(numbers_input) > 1:
+                break
+            else:
+                print("2개 이상의 숫자를 입력하세요.")
         except ValueError:
-            print("다시 입력하세요.")
+            print("숫자를 다시 입력하세요.")
     result: list[float] = sort_numbers(numbers_input)
     print("Sorted:", *(f"<{value}>" for value in result))
 
@@ -25,7 +29,7 @@ def sort_numbers(numbers: list[float]) -> list[float]:
         min_idx = i
         for j in range(i + 1, n):
             if arr[j] < arr[min_idx]:
-                min_idx = j
+                min_idx: int = j
         arr[i], arr[min_idx] = arr[min_idx], arr[i]
 
     return arr
