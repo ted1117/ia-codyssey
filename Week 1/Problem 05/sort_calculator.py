@@ -5,6 +5,7 @@ def main():
                 map(float, input("하나 이상의 숫자를 입력하세요: ").split())
             )
 
+            # 숫자를 2개 이상 입력하도록 유도
             if len(numbers_input) > 1:
                 break
             else:
