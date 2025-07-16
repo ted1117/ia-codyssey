@@ -2,7 +2,7 @@ def main():
     while True:
         try:
             numbers_input: list[float] = list(
-                map(float, input("하나 이상의 숫자를 입력하세요: ").split())
+                map(float, input("2 이상의 숫자를 입력하세요: ").split())
             )
 
             # 숫자를 2개 이상 입력하도록 유도
