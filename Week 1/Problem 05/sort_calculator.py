@@ -18,7 +18,7 @@ def sort_numbers(numbers: list[float]) -> list[float]:
     2. arr에서 가장 작은 수를 찾아 0번째 위치로 이동
     3. arr[i:]로 범위를 줄여 단계 2번 반복
     """
-    arr = numbers.copy()
+    arr: list[float] = numbers.copy()
     n = len(arr)
 
     for i in range(n):
