@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 @app.route("/")
 def home() -> Response:
-
     text = "Hello, DevOps"
 
     lang = request.args.get("lang", DEFAULT_LANG)
