@@ -39,6 +39,7 @@ class Stack:
         return len(self._items)
 
 
+########### 사칙연산 함수 정의 ############
 def add(a: float, b: float) -> float:
     return a + b
 
@@ -57,25 +58,47 @@ def divide(a: float, b: float) -> float:
     return a / b
 
 
-def infix_to_postfix(user_input: str) -> list[Union[float, str]]:
+########### 입력 처리 ##############
+def format_user_input(expression: str) -> list[str]:
+    expression = expression.replace("(", " ( ")
+    expression = expression.replace(")", " ) ")
+    expression = expression.replace("+", " + ")
+    expression = expression.replace("-", " - ")
+    expression = expression.replace("*", " * ")
+    expression = expression.replace("/", " / ")
+
+    return expression.split()
+
+
+def infix_to_postfix(expression: list[str]) -> list[Union[float, str]]:
+    """중위표기법을 후위표기법으로 변환"""
     output: list[Union[float, str]] = []
     operators = Stack()
     priority = {"+": 0, "-": 0, "*": 1, "/": 1}
 
-    for ch in user_input.split():
-        try:
-            num = float(ch)
-            output.append(num)
-        except ValueError:
-            op = ch
-            if op not in priority:
-                raise ValueError("Invalid input.")
-
-            while not operators.is_empty() and priority.get(
-                operators.peek(), -1
-            ) >= priority.get(op, -1):
+    for ch in expression:
+        if ch == "(":
+            operators.push(ch)
+        elif ch == ")":
+            while not operators.is_empty() and operators.peek() != "(":
                 output.append(operators.pop())
-            operators.push(op)
+            if operators.is_empty():
+                raise ValueError("괄호 불일치: '('가 없습니다.")
+            operators.pop()
+        else:
+            try:
+                num = float(ch)
+                output.append(num)
+            except ValueError:
+                op = ch
+                if op not in priority:
+                    raise ValueError("Invalid input.")
+
+                while not operators.is_empty() and priority.get(
+                    operators.peek(), -1
+                ) >= priority.get(op, -1):
+                    output.append(operators.pop())
+                operators.push(op)
 
     while not operators.is_empty():
         output.append(operators.pop())
@@ -94,7 +117,7 @@ def calculate(postfix: list[Union[float, str]]) -> float:
             operand2 = operands.pop()
             operand1 = operands.pop()
 
-            op_func = op_dict[ch]
+            op_func = op_dict[ch]  # type: ignore
             result = op_func(operand1, operand2)
 
             operands.push(result)
@@ -106,10 +129,12 @@ def calculate(postfix: list[Union[float, str]]) -> float:
 
 
 def main():
-    user_input = input("수식을 입력하세요: ")
+    user_input: str = input("수식을 입력하세요: ")
+
+    expression: list[str] = format_user_input(user_input)
 
     try:
-        postfix_list = infix_to_postfix(user_input)
+        postfix_list = infix_to_postfix(expression)
         result = calculate(postfix_list)
         print(result)
 
